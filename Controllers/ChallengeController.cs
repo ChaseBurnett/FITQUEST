@@ -23,6 +23,18 @@ namespace FITQUEST.Controllers
             return Ok(_challenegeRepository.GetAll());
         }
 
+        [HttpGet("By Id")]
+
+        public IActionResult GetById(int id)
+        {
+            var challenge = _challenegeRepository.GetById(id);
+            if(challenge == null)
+            {
+                return NotFound();
+            }
+            return Ok(challenge);
+        }
+
         [HttpGet("By Tier")]
 
         public IActionResult GetAllByTier(int tier) 

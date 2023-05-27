@@ -39,6 +39,36 @@ namespace FITQUEST.Repositories
             }
         }
 
+        public Challenge GetById(int id) 
+        {
+            using(var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT [id],[title],[tier]
+                                          FROM [FITQUEST].[dbo].[Challenges]
+                                          WHERE [id] = @id;";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+                    Challenge challenge = null;
+
+                    if (reader.Read())
+                    {
+                        challenge = new Challenge()
+                        {
+                            id = DbUtils.GetInt(reader,"id"),
+                            title = DbUtils.GetString(reader, "title"),
+                            tier = DbUtils.GetInt(reader, "tier")
+                        };
+                    }
+                    reader.Close();
+                    return challenge;
+
+                }
+            }
+        }
+
         public List<Challenge> GetAllByTier(int tier)
         {
             using (var conn = Connection)

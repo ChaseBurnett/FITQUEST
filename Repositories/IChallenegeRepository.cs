@@ -6,6 +6,8 @@ namespace FITQUEST.Repositories
     {
         List<Challenge> GetAll();
         List<Challenge> GetAllByTier(int tier);
+
+        Challenge GetById(int id);
         void Update(Challenge challenge);
     }
 }
