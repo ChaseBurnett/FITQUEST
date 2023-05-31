@@ -16,11 +16,36 @@ namespace FITQUEST.Controllers
             _challengeCheckInRepository = challenegeCheckInRepository;
         }
 
-        [HttpGet("By User Id")]
+        [HttpGet("{id}")]
 
-        public IActionResult GetAllByUserId(User users, int id)
+        public IActionResult GetAllByUserId(int id)
         {
            return Ok(_challengeCheckInRepository.GetAllByUserId(id));
+        }
+
+        [HttpPost]
+        public IActionResult Add(ChallengeCheckIn challengeCheckIn) 
+        {
+            var newChallengeCheckin = _challengeCheckInRepository.Add(challengeCheckIn);
+            return Ok(new
+            {
+                message = "Created",
+                challengeCheckIn = newChallengeCheckin
+            });
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(ChallengeCheckIn challengeCheckIn, int id)
+        {
+            _challengeCheckInRepository.Update(challengeCheckIn, id);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _challengeCheckInRepository.Delete(id);
+            return NoContent();
         }
     }
 }
