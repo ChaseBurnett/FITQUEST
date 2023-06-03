@@ -8,6 +8,8 @@ namespace FITQUEST.Repositories
 
         User GetById(int id);
 
+        User GetByFBID(string FireBaseId);
+
         void DeleteUser(int id);
 
         void UpdateUser(User userDetails);
