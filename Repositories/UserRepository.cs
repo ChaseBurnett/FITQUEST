@@ -64,6 +64,37 @@ namespace FITQUEST.Repositories
             }
         }
 
+        public User GetByFBID(string FireBaseId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT [id], [FireBaseId], [userName], [email], [imgUrl]
+                                        FROM [FITQUEST].[dbo].[User]
+                                        WHERE FireBaseId = @FireBaseId;";
+                    cmd.Parameters.AddWithValue("@FireBaseId", FireBaseId);
+                    var reader = cmd.ExecuteReader();
+                    User user = null;
+
+                    if (reader.Read())
+                    {
+                        user = new User()
+                        {
+                            id = DbUtils.GetInt(reader, "id"),
+                            FireBaseId = DbUtils.GetString(reader, "FireBaseId"),
+                            userName = DbUtils.GetString(reader, "username"),
+                            email = DbUtils.GetString(reader, "email"),
+                            imgUrl = DbUtils.GetString(reader, "imgUrl"),
+                        };
+                    }
+                    reader.Close();
+                    return user;
+                }
+            }
+        }
+
         public void DeleteUser(int id)
         {
             using (var conn = Connection)

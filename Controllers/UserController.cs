@@ -29,6 +29,13 @@ namespace FITQUEST.Controllers
             return Ok(_userRepository.GetById(id));
         }
 
+        [HttpGet("FBID/{FireBaseId}")]
+        
+        public IActionResult GetByFBID(string FireBaseId)
+        {
+            return Ok(_userRepository.GetByFBID(FireBaseId));
+        }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
