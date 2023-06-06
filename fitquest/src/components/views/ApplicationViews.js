@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { HomeView } from "./HomeView";
+import { HomeView } from "./UserViews/HomeView";
 
 export const ApplicationViews = () => {
 

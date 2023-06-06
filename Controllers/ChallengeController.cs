@@ -23,7 +23,7 @@ namespace FITQUEST.Controllers
             return Ok(_challenegeRepository.GetAll());
         }
 
-        [HttpGet("By Id")]
+        [HttpGet("challenge/{id}")]
 
         public IActionResult GetById(int id)
         {
@@ -35,7 +35,7 @@ namespace FITQUEST.Controllers
             return Ok(challenge);
         }
 
-        [HttpGet("By Tier")]
+        [HttpGet("{tier}")]
 
         public IActionResult GetAllByTier(int tier) 
         {
