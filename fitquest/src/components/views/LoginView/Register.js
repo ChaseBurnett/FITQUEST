@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { authenticate } from "../../auth/authUtils";
+import { authenticate } from "../../Utils/authUtils";
 
 export const Register = () => {
   const [user, setUser] = useState({
