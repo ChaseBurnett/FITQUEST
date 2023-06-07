@@ -4,6 +4,7 @@ namespace FITQUEST.Repositories
 {
     public interface IChallengeCheckInRepository
     {
+        public ChallengeCheckIn GetById(int id);
         List<UserChallengeCheckIn> GetAllByUserId(int id);
 
         ChallengeCheckIn Add(ChallengeCheckIn challengeCheckIn);

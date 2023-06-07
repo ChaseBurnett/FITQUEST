@@ -7,6 +7,38 @@ namespace FITQUEST.Repositories
     {
         public ChallengeCheckInRepository(IConfiguration configuration) : base(configuration) { }
 
+        public ChallengeCheckIn GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd= conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT  [id]
+                                               ,[date]
+                                              ,[userChallengesId]
+                                              ,[successful]
+                                          FROM [FITQUEST].[dbo].[challengeCheckIn]
+                                          WHERE id = @id;";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+                    ChallengeCheckIn challengeCheckIn = null;
+
+                    if (reader.Read())
+                    {
+                        challengeCheckIn = new ChallengeCheckIn()
+                        {
+                            date = DbUtils.GetDateTime(reader, "date"),
+                            userChallengesId = DbUtils.GetInt(reader, "userChallengesId"),
+                            successful = DbUtils.GetNullableBool(reader, "successful")
+                        };
+                    }
+                    reader.Close();
+                    return challengeCheckIn;
+                }
+            }
+        }
+
         public List<UserChallengeCheckIn> GetAllByUserId(int id)
         {
             using (var conn = Connection)

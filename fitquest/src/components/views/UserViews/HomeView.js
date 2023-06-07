@@ -8,7 +8,7 @@ import { DARK_GRAY, BLACK, WHITE, DIRTY_WHITE, SLATE, LIGHT_GRAY } from "../../U
 
 
 const userUrl = "https://localhost:7214/api/User/";
-const challengeCheckinUrl = "https://localhost:7214/api/ChallengeCheckIn/";
+const challengeCheckinUrl = "https://localhost:7214/api/ChallengeCheckIn/USER/";
 const challengeT1Url = "https://localhost:7214/api/Challenge/1";
 const challengeT2Url = "https://localhost:7214/api/Challenge/2";
 const challengeT3Url = "https://localhost:7214/api/Challenge/3";
@@ -76,7 +76,9 @@ export const HomeView = () => {
             <h1>FITQUEST</h1>
             <h2>Welcome {user.userName}!</h2>
             <button type="submit" onClick={() => authsignOut(navigate)}>Log Out</button>
+            <button type="submit" onClick={() => navigate("/addCheckIn")}>Add Check In</button>
         </div>
+
         <div className="d-flex justify-content-center" 
              style={{margin:`20px 0`}}>
         <Card style={{color: `${WHITE}`, 
@@ -84,7 +86,7 @@ export const HomeView = () => {
         border: `5px solid ${LIGHT_GRAY}`,
         padding: '15px',
         margin: '5px'}}>
-        <h2>Challenges</h2>
+        <h2>Previous Check In's</h2>
         {Array.isArray(challengeCheckIns) ? (
             challengeCheckIns.map((checkIn) => (
             <>
@@ -98,11 +100,13 @@ export const HomeView = () => {
         )}
         </Card>
         </div>
+
         <ListGroup style={{color: `${WHITE}`, 
         backgroundColor: `${LIGHT_GRAY}`,
         border: `5px solid ${SLATE}`,
         padding: '15px',
         margin: '5px'}}>
+        <h3><b>Tier 1 Challenges</b></h3>
         {Array.isArray(tier1) ? (
             tier1.map((challenge) => (
             <>
@@ -114,11 +118,13 @@ export const HomeView = () => {
             <p>No challenges available.</p>
         )}
         </ListGroup>
+
         <ListGroup style={{color: `${WHITE}`, 
         backgroundColor: `${LIGHT_GRAY}`,
         border: `5px solid ${SLATE}`,
         padding: '15px',
         margin: '5px'}}>
+        <h3>Tier 2 Challenges</h3>
         {Array.isArray(tier2) ? (
             tier2.map((challenge) => (
             <>
@@ -138,6 +144,7 @@ export const HomeView = () => {
         border: `5px solid ${SLATE}`,
         padding: '15px',
         margin: '5px'}}>
+        <h3>Tier 3 Challenges</h3>
         {Array.isArray(tier3) ? (
             tier3.map((challenge) => (
             <>
