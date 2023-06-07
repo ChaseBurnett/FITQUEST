@@ -15,8 +15,14 @@ namespace FITQUEST.Controllers
         {
             _challengeCheckInRepository = challenegeCheckInRepository;
         }
-
         [HttpGet("{id}")]
+
+        public IActionResult GetById(int id)
+        {
+            return Ok(_challengeCheckInRepository.GetById(id));
+        }
+
+        [HttpGet("USER/{id}")]
 
         public IActionResult GetAllByUserId(int id)
         {
