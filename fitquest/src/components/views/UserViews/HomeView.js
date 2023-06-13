@@ -5,6 +5,8 @@ import { CardBody, CardTitle, Container, List, ListGroup, ListGroupItem, Modal }
 import { getCurrentUser } from "../../Utils/Constants";
 import { Card } from "reactstrap";
 import { DARK_GRAY, BLACK, WHITE, DIRTY_WHITE, SLATE, LIGHT_GRAY } from "../../Utils/Constants";
+import { EditCheckInForm } from "./EditCheckInForm";
+import { Button } from "reactstrap";
 
 
 const userUrl = "https://localhost:7214/api/User/";
@@ -34,7 +36,7 @@ export const HomeView = () => {
       
 
     const fetchChallengeCheckIns = async () => {
-        const fetchData = await fetch(`${challengeCheckinUrl}${currentUser.id}`);
+        const fetchData = await fetch(`https://localhost:7214/api/ChallengeCheckIn/USER/${currentUser.id}`);
         const data = await fetchData.json();
         setchallengeCheckIns(data) 
     };
@@ -65,6 +67,21 @@ export const HomeView = () => {
     useEffect(() => {fetchTier2()},[]);
     useEffect(() => {fetchTier3()},[]);
 
+    const deleteButton = (id) => {
+        return <Button onClick={() => {
+            const deleteButtonAction = async () => {
+                await fetch(`https://localhost:7214/api/ChallengeCheckIn/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                fetchChallengeCheckIns();
+            };
+            deleteButtonAction()
+            navigate("/")
+        }}>Delete</Button>
+    }
 
 
 
@@ -87,17 +104,19 @@ export const HomeView = () => {
         padding: '15px',
         margin: '5px'}}>
         <h2>Previous Check In's</h2>
-        {Array.isArray(challengeCheckIns) ? (
-            challengeCheckIns.map((checkIn) => (
+        {(
+            challengeCheckIns.map(checkIn => 
             <>
+                <h3>{checkIn.ccid}</h3>
                 <h3>{checkIn.title}</h3>
                 <h4>{checkIn.date}</h4>
                 <h4>{checkIn.successful ? "True" : "False"}</h4>
+                <button type="submit" onClick={() => navigate(`/editCheckIn/${checkIn.ccid}`)}>Edit Me</button>
+                {deleteButton(checkIn.ccid)} 
             </>
-            ))
-        ) : (
-            <p>No challenge check-ins available.</p>
-        )}
+            )
+        ) 
+        }
         </Card>
         </div>
 
@@ -110,8 +129,10 @@ export const HomeView = () => {
         {Array.isArray(tier1) ? (
             tier1.map((challenge) => (
             <>
+                <ListGroupItem>
                 <h3>{challenge.title}</h3>
                 <h4>{challenge.description}</h4>
+                </ListGroupItem>
                 </>
             ))
         ) : (

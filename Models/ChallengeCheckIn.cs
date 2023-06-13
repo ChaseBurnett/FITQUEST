@@ -26,5 +26,7 @@
 
         public int id { get; set; }
 
+        public int ccid { get; set; }
+
     }
 }
