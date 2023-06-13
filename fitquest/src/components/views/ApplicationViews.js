@@ -9,7 +9,7 @@ export const ApplicationViews = () => {
       <Routes>
         <Route path="/" element={<HomeView/>} />
         <Route path="/addCheckIn" element={<AddCheckInForm/>} />
-        <Route path="/editCheckIn" element={<EditCheckInForm/>} />
+        <Route path="/editCheckIn/:checkInId" element={<EditCheckInForm/>} />
         
       
       </Routes>

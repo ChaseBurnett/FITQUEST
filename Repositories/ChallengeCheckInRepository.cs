@@ -28,6 +28,7 @@ namespace FITQUEST.Repositories
                     {
                         challengeCheckIn = new ChallengeCheckIn()
                         {
+                            id = DbUtils.GetInt(reader, "id"),
                             date = DbUtils.GetDateTime(reader, "date"),
                             userChallengesId = DbUtils.GetInt(reader, "userChallengesId"),
                             successful = DbUtils.GetNullableBool(reader, "successful")
@@ -52,7 +53,8 @@ namespace FITQUEST.Repositories
 		                                        C.title,
 		                                        C.tier,
 		                                        CCI.date,
-		                                        CCI.successful
+		                                        CCI.successful,
+                                                CCI.id AS 'checkInId'
 
 		                                        FROM challengeCheckIn CCI
 
@@ -77,6 +79,7 @@ namespace FITQUEST.Repositories
                         UserChallengeCheckIn challengeCheck = new UserChallengeCheckIn()
                         {
                             id = DbUtils.GetInt(reader, "id"),
+                            ccid = DbUtils.GetInt(reader, "checkInId"),
                             userName = DbUtils.GetString(reader, "userName"),
                             imgUrl = DbUtils.GetString(reader, "imgUrl"),
                             title = DbUtils.GetString(reader, "title"),
