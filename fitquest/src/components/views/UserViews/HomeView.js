@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { authsignOut } from "../../Utils/authUtils";
 import { useState,useEffect } from "react";
-import { CardBody, CardTitle, Container, List, ListGroup, ListGroupItem, Modal } from "reactstrap";
+import { CardBody, CardTitle, Container, List, ListGroup, ListGroupItem, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { getCurrentUser } from "../../Utils/Constants";
 import { Card } from "reactstrap";
 import { DARK_GRAY, BLACK, WHITE, DIRTY_WHITE, SLATE, LIGHT_GRAY } from "../../Utils/Constants";
 import { EditCheckInForm } from "./EditCheckInForm";
 import { Button } from "reactstrap";
+import Leaderboard from "./Leaderboard";
+import React from "react";
 
 
 const userUrl = "https://localhost:7214/api/User/";
@@ -14,6 +16,7 @@ const challengeCheckinUrl = "https://localhost:7214/api/ChallengeCheckIn/USER/";
 const challengeT1Url = "https://localhost:7214/api/Challenge/1";
 const challengeT2Url = "https://localhost:7214/api/Challenge/2";
 const challengeT3Url = "https://localhost:7214/api/Challenge/3";
+// const leaderboardUrl = "https://localhost:7214/api/Leaderboard";
 
 
 
@@ -27,6 +30,7 @@ export const HomeView = () => {
     const [tier2, setTier2] = useState([]);
     const [tier3, setTier3] = useState([]);
     const [challengeCheckIns, setchallengeCheckIns] = useState([]);
+    // const [leaderboard, setLeaderboard] = useState([]);
 
     const fetchUserDetails = async () => {
         const fetchData = await fetch(`${userUrl}${currentUser.id}`);
@@ -59,6 +63,11 @@ export const HomeView = () => {
         setTier3(data)
     };
 
+    // const fetchLeaderboard = async () => {
+    //     const fetchData = await fetch(`${leaderboardUrl}`);
+    //     const data = await fetchData.json();
+    //     setLeaderboard(data)
+    // };
 
 
     useEffect(() => {fetchUserDetails()},[]);
@@ -66,6 +75,7 @@ export const HomeView = () => {
     useEffect(() => {fetchTier1()},[]);
     useEffect(() => {fetchTier2()},[]);
     useEffect(() => {fetchTier3()},[]);
+    // useEffect(() => {fetchLeaderboard()},[]);
 
     const deleteButton = (id) => {
         return <Button onClick={() => {
@@ -83,6 +93,10 @@ export const HomeView = () => {
         }}>Delete</Button>
     }
 
+    // const [modal, setModal] = useState(false);
+
+    // const toggle = () => setModal(!modal);
+
 
 
     return(
@@ -94,7 +108,30 @@ export const HomeView = () => {
             <h2>Welcome {user.userName}!</h2>
             <button type="submit" onClick={() => authsignOut(navigate)}>Log Out</button>
             <button type="submit" onClick={() => navigate("/addCheckIn")}>Add Check In</button>
+            <button type="submit" onClick={() => navigate("/Leaderboard")}>Leaderboard</button>
         </div>
+        {/* <div>
+            <Button color="danger" onClick={toggle}>Leaderboard</Button>
+            <Modal isOpen={modal} toggle={toggle} className="">
+            <ModalHeader toggle={toggle}>Leaderboard</ModalHeader>
+            <ModalBody>
+            {(
+                leaderboard.map(leader =>
+                <>
+                    <h3>{leader.userName}</h3>
+                    <h4>{leader.title}</h4>
+                    <h4>{leader.checkIns}</h4>
+                    <h4>{leader.successful}</h4>
+                    </>
+                )
+            )
+            }
+            </ModalBody>
+            <ModalFooter>
+            <Button color="secondary" onClick={toggle}>Exit</Button>
+            </ModalFooter>
+            </Modal>
+        </div> */}
 
         <div className="d-flex justify-content-center" 
              style={{margin:`20px 0`}}>

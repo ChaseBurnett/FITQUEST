@@ -5,6 +5,7 @@ import {firebaseConfig} from "./apikeys";
 import firebase from "firebase/compat/app";
 import {FitQuest} from "./components/FitQuest";
 import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 firebase.initializeApp(firebaseConfig)
 
